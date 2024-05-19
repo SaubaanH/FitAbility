@@ -101,34 +101,34 @@ app.listen(port, () => {
 function generateWorkoutRoutine(goal) {
     if (goal === 'lose_weight') {
         
-        //const prompt = "What is a good workout routine for someone that wants to lose weight"
-        //const result = model.generateContent(prompt);
-        //const response = result.response;
-        //const text1 = response.text();
+        const prompt = "What is a good workout routine for someone that wants to lose weight"
+        const result = model.generateContent(prompt);
+        const response = result.response;
+        const text = response.text();
 
-        return 'Try starting with 20-30 minutes of brisk walking, then mix in 30-45 minutes of cycling or swimming a few times a week';
+        return 'text';
     } else if (goal === 'gain_weight') {
 
 
-        //const prompt = "What is a good workout routine for someone that wants to lose weight"
-        //const result = model.generateContent(prompt);
-        //const response = result.response;
-        //const text1 = response.text();
+        const prompt = "What is a good workout routine for someone that wants to lose weight"
+        const result = model.generateContent(prompt);
+        const response = result.response;
+        const text1 = response.text();
 
-        return 'try gentle strength training exercises like light weightlifting, resistance band workouts, and bodyweight exercises such as modified push-ups and squats';
+        return 'text1';
     } else {
 
 
-        //const prompt = "What is a good workout routine for someone that wants to lose weight"
-        //const result = model.generateContent(prompt);
-        //const response = result.response;
-        //const text1 = response.text();
+        const prompt = "What is a good workout routine for someone that wants to lose weight"
+        const result = model.generateContent(prompt);
+        const response = result.response;
+        const text2 = response.text();
 
-        return 'Try incorporating swimming or hand cycling for cardio, resistance bands and free weights for strength training';
+        return 'text2';
     }
 }
 
-// Function to round time to nearest 5 minutes
+
 function roundToFiveMinutes(date) {
     const ms = 1000 * 60 * 5; // milliseconds in 5 minutes
     return new Date(Math.round(date.getTime() / ms) * ms);
@@ -160,7 +160,7 @@ function findFreeSlots(events, days) {
     return freeSlots;
 }
 
-// Function to check if a time slot is free
+
 function isSlotFree(events, start, end) {
     return !events.some(event => {
         const eventStart = new Date(event.start);
