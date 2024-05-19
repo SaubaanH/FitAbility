@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitability - AI Fitness Scheduler</title>
+    <script>
+        async function scheduleWorkouts(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch('/schedule-workouts', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            displayCalendar(result.calendarData);
+            alert(`BMI: ${result.bmi}\nDaily Calories: ${result.dailyCalories}\nCalorie Intake: ${result.calorieIntake}`);
+        }
+
+        function displayCalendar(events) {
+            const calendarDiv = document.getElementById('calendar');
+            calendarDiv.innerHTML = '';
+            events.forEach(event => {
+                const eventDiv = document.createElement('div');
+                eventDiv.classList.add('event');
+                eventDiv.innerHTML = `<strong>${event.summary}</strong><br>Start: ${new Date(event.start).toLocaleString()}<br>End: ${new Date(event.end).toLocaleString()}<br>Description: ${event.description}`;
+                calendarDiv.appendChild(eventDiv);
+            });
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8f5;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #e0f7e0;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        header img {
+            width: 50px;
+            vertical-align: middle;
+        }
+        header h1 {
+            display: inline;
+            margin: 0;
+            padding-left: 10px;
+            font-size: 2.5em;
+            color: #333;
+        }
+        form {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #e0f7e0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            max-width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .event {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        
+        <h1>Fitability</h1>
+    </header>
+    <form onsubmit="scheduleWorkouts(event)">
+        <label>
+            Gender:
+            <select name="gender" required>
+                <option value="">Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </label>
+        <label>
+            Age:
+            <input type="number" name="age" required />
+        </label>
+        <label>
+            Weight (kg):
+            <input type="number" name="weight" required />
+        </label>
+        <label>
+            Height (cm):
+            <input type="number" name="height" required />
+        </label>
+        <label>
+            Activity Level:
+            <select name="activityLevel" required>
+                <option value="">Select</option>
+                <option value="sedentary">Sedentary</option>
+                <option value="lightly_active">Lightly Active</option>
+                <option value="moderately_active">Moderately Active</option>
+                <option value="very_active">Very Active</option>
+                <option value="extra_active">Extra Active</option>
+            </select>
+        </label>
+        <label>
+            Goal:
+            <select name="goal" required>
+                <option value="">Select</option>
+                <option value="lose_weight">Lose Weight</option>
+                <option value="maintain_weight">Maintain Weight</option>
+                <option value="gain_weight">Gain Weight</option>
+            </select>
+        </label>
+        <label>
+            Disability:
+            <input type="text" name="disability" />
+        </label>
+        <label>
+            Upload Calendar (.ics):
+            <input type="file" name="calendar" accept=".ics" required />
+        </label>
+        <button type="submit">Calculate and Schedule</button>
+    </form>
+    <h2>Scheduled Workouts:</h2>
+    <div id="calendar"></div>
+</body>
+</html>
